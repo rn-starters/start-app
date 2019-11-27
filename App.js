@@ -14,6 +14,8 @@ import {
   View,
   Text,
   StatusBar,
+  TextInput,
+  Button
 } from 'react-native';
 
 import {
@@ -25,6 +27,22 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const App: () => React$Node = () => {
+  const [total, setTotal] = React.useState(1);
+  const [value, onValueChange] = React.useState('');
+
+  const sum = () => {
+    setTotal(total + Number(value));
+  }
+  const sub = () => {
+    setTotal(total - Number(value));
+  }
+  const div = () => {
+    setTotal(total / Number(value));
+  }
+  const mul = () => {
+    setTotal(total * Number(value));
+  }
+
   return (
       <>
         <StatusBar barStyle="dark-content" />
@@ -33,38 +51,45 @@ const App: () => React$Node = () => {
               contentInsetAdjustmentBehavior="automatic"
               style={styles.scrollView}>
             <Header />
-            {global.HermesInternal == null ? null : (
-                <View style={styles.engine}>
-                  <Text style={styles.footer}>Engine: Hermes</Text>
-                </View>
-            )}
             <View style={styles.body}>
               <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Step One</Text>
+                <Text style={styles.sectionTitle}>Smart Calculator</Text>
                 <Text style={styles.sectionDescription}>
-                  Edit <Text style={styles.highlight}>App.js</Text> to change this
-                  screen and then come back to see your edits.
+                  {total}
                 </Text>
+                <View>
+                  <TextInput
+                      style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginTop:20 }}
+                      onChangeText={text => onValueChange(text)}
+                      value={value}
+                      placeholder={'Enter a number'}
+                  />
+                </View>
+                <View style={{marginTop:40}}>
+                  <Button
+                      title="+"
+                      onPress={() => sum()}
+                  />
+                </View>
+                <View style={{marginTop:40}}>
+                  <Button
+                      title="-"
+                      onPress={() => sub()}
+                  />
+                </View>
+                <View style={{marginTop:40}}>
+                  <Button
+                      title="/"
+                      onPress={() => div()}
+                  />
+                </View>
+                <View style={{marginTop:40}}>
+                  <Button
+                      title="*"
+                      onPress={() => mul()}
+                  />
+                </View>
               </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>See Your Changes</Text>
-                <Text style={styles.sectionDescription}>
-                  <ReloadInstructions />
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Debug</Text>
-                <Text style={styles.sectionDescription}>
-                  <DebugInstructions />
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Learn More</Text>
-                <Text style={styles.sectionDescription}>
-                  Read the docs to discover what to do next:
-                </Text>
-              </View>
-              <LearnMoreLinks />
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -82,6 +107,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: Colors.white,
+    alignItems: 'center'
   },
   sectionContainer: {
     marginTop: 32,
