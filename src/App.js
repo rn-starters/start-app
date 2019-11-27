@@ -30,12 +30,15 @@ import CalcButton from './components/CalcButton'
 import CalcInput from './components/CalcInput'
 import CalcTotal from './components/CalcTotal'
 
+import Reactotron from 'reactotron-react-native'
+
 const App: () => React$Node = () => {
   const [total, setTotal] = React.useState(1);
   const [value, onValueChange] = React.useState('');
 
   const sum = () => {
     setTotal(total + Number(value));
+    Reactotron.log(value)
   }
   const sub = () => {
     setTotal(total - Number(value));
