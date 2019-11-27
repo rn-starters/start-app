@@ -26,6 +26,10 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import CalcButton from './components/CalcButton'
+import CalcInput from './components/CalcInput'
+import CalcTotal from './components/CalcTotal'
+
 const App: () => React$Node = () => {
   const [total, setTotal] = React.useState(1);
   const [value, onValueChange] = React.useState('');
@@ -42,6 +46,9 @@ const App: () => React$Node = () => {
   const mul = () => {
     setTotal(total * Number(value));
   }
+  const reset = () => {
+    setTotal(0);
+  }
 
   return (
       <>
@@ -54,39 +61,46 @@ const App: () => React$Node = () => {
             <View style={styles.body}>
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Smart Calculator</Text>
-                <Text style={styles.sectionDescription}>
-                  {total}
-                </Text>
+                  <CalcTotal total={total} />
                 <View>
-                  <TextInput
-                      style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginTop:20 }}
-                      onChangeText={text => onValueChange(text)}
+                  <CalcInput
                       value={value}
-                      placeholder={'Enter a number'}
+                      changeValue={onValueChange}
+                    />
+                </View>
+                <View style={{marginTop:40}}>
+                  <CalcButton
+                      title = {'+'}
+                      callback={sum}
+                      bgColor={'green'}
                   />
                 </View>
                 <View style={{marginTop:40}}>
-                  <Button
-                      title="+"
-                      onPress={() => sum()}
+                  <CalcButton
+                      title = {'-'}
+                      callback={sub}
+                      bgColor={'navy'}
                   />
                 </View>
                 <View style={{marginTop:40}}>
-                  <Button
-                      title="-"
-                      onPress={() => sub()}
+                  <CalcButton
+                      title = {'/'}
+                      callback={div}
+                      bgColor={'black'}
                   />
                 </View>
                 <View style={{marginTop:40}}>
-                  <Button
-                      title="/"
-                      onPress={() => div()}
+                  <CalcButton
+                      title = {'*'}
+                      callback={mul}
+                      bgColor={'red'}
                   />
                 </View>
                 <View style={{marginTop:40}}>
-                  <Button
-                      title="*"
-                      onPress={() => mul()}
+                  <CalcButton
+                      title = {'C'}
+                      callback={reset}
+                      bgColor={'#990099'}
                   />
                 </View>
               </View>
@@ -117,12 +131,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
   },
   highlight: {
     fontWeight: '700',
